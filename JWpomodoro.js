@@ -1,15 +1,18 @@
 var starting = {
+  // the starting work time of 25 minutes
   clockCount: 1500,
   clock: 1500,
   progClock: 1500,
+  //the starting break time of 5 minutes
   bClock: 300,
   bClockCount: 300,
   progBClock: 300,
   status: "resting"
 };
 
+//the object to represent the work clock
 var mainClock = {
-  changeTime: function(targetID) {
+  changeTime: function (targetID) {
     if (targetID === "wPlus") {
       starting.clockCount += 60;
       starting.clock = starting.clockCount;
@@ -32,7 +35,7 @@ var mainClock = {
       document.getElementById("bMin").value = starting.bClock / 60 + ":" + "00";
     }
   },
-  countDown: function() {
+  countDown: function () {
     starting.clock--;
     document.getElementById("progressBar").style.width =
       starting.clock / starting.progClock * 100 + "%";
@@ -57,13 +60,13 @@ var mainClock = {
       breakClock.startBreak();
     }
   },
-  startClock: function() {
+  startClock: function () {
     this.countDownInterval = setInterval(this.countDown.bind(mainClock), 1000);
   },
-  stopClock: function() {
+  stopClock: function () {
     clearInterval(this.countDownInterval);
   },
-  clockReset: function() {
+  clockReset: function () {
     clearInterval(this.countDownInterval);
     breakClock.stopBreak();
     starting.clock = 1500;
@@ -76,8 +79,10 @@ var mainClock = {
   }
 }; // end of var mainClock
 
+
+//the object to represent the break clock
 var breakClock = {
-  countDown: function() {
+  countDown: function () {
     starting.bClock--;
     document.getElementById("progressBar").style.width =
       starting.bClock / starting.progBClock * 100 + "%";
@@ -94,10 +99,10 @@ var breakClock = {
       mainClock.clockReset();
     }
   },
-  startBreak: function() {
+  startBreak: function () {
     this.breakInterval = setInterval(this.countDown.bind(breakClock), 1000);
   },
-  stopBreak: function() {
+  stopBreak: function () {
     clearInterval(this.breakInterval);
   }
 }; //end of breakClock
